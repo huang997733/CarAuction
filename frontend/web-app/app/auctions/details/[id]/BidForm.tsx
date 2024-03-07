@@ -1,15 +1,16 @@
 "use client";
 
+type Props = {
+  auctionId: string;
+  highBid: number;
+};
+
 import { placeBidForAuction } from "@/app/actions/auctionActions";
 import { numberWithCommas } from "@/app/lib/numberWithComma";
 import { useBidStore } from "@/hooks/useBidStore";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
-
-type Props = {
-  auctionId: string;
-  highBid: number;
-};
+import { toast } from "react-hot-toast";
 
 export default function BidForm({ auctionId, highBid }: Props) {
   const {
@@ -21,10 +22,20 @@ export default function BidForm({ auctionId, highBid }: Props) {
   const addBid = useBidStore((state) => state.addBid);
 
   function onSubmit(data: FieldValues) {
-    placeBidForAuction(auctionId, +data.amount).then((bid) => {
-      addBid(bid);
+    if (data.amount <= highBid) {
       reset();
-    });
+      return toast.error(
+        "Bid must be at least $" + numberWithCommas(highBid + 1)
+      );
+    }
+
+    placeBidForAuction(auctionId, +data.amount)
+      .then((bid) => {
+        if (bid.error) throw bid.error;
+        addBid(bid);
+        reset();
+      })
+      .catch((err) => toast.error(err.message));
   }
 
   return (
@@ -36,8 +47,10 @@ export default function BidForm({ auctionId, highBid }: Props) {
         type="number"
         {...register("amount")}
         className="input-custom text-sm text-gray-600"
-        placeholder={`Enter you bid (min: $${numberWithCommas(highBid + 1)})`}
-      ></input>
+        placeholder={`Enter your bid (minimum bid is $${numberWithCommas(
+          highBid + 1
+        )})`}
+      />
     </form>
   );
 }

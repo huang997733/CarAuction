@@ -22,7 +22,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: search-secret
-                key: rabbitUn 
+                key: rabbitUn
           - name: RabbitMq__Password
             valueFrom:
               secretKeyRef:
@@ -32,7 +32,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: search-secret
-                key: connString 
+                key: connString
           - name: AuctionServiceUrl
             value: http://auction-clusterip
 ---
@@ -46,4 +46,4 @@ spec:
     app: search-svc
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80

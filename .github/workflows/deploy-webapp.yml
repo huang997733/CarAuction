@@ -10,7 +10,7 @@ on:
 env:
   REGISTRY_IMAGE: ziyangh/web-app
   DOCKERFILE: frontend/web-app/Dockerfile
-  DEPLOYMENT_NAME: webapp
+  DEPLOYMENT_NAME: web-app
 jobs:
   build:
     runs-on: ubuntu-latest

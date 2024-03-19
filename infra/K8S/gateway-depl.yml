@@ -17,7 +17,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: ClientApp
-            value: https://app.carauction.com
+            value: https://app.carcar.shop
           - name: IdentityServiceUrl
             value: https://id.ziyangh.com
 ---

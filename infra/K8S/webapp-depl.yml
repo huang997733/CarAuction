@@ -22,7 +22,7 @@ spec:
                 name: webapp-secret
                 key: authSecret
           - name: NEXTAUTH_URL
-            value: https://app.carauction.com
+            value: https://app.carcar.shop
           - name: API_URL
             value: http://gateway-clusterip/
           - name: ID_URL
